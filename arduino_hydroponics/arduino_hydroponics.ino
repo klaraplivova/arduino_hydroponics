@@ -33,3 +33,13 @@ void setup() {
   
   pinMode(TDS_PIN, INPUT);
 }
+  // sample every 40 ms
+  if (millis() - sampleTime > 40) {
+    sampleTime = millis();
+    analogBuffer[analogBufferIndex] = analogRead(TDS_PIN);
+    analogBufferIndex = (analogBufferIndex + 1) % SCOUNT;
+  }
+
+  // update display every second
+  if (millis() - displayTime > 1000) {
+    displayTime = millis();
