@@ -23,3 +23,13 @@ int analogBufferIndex = 0;
 
 void setup() {
   Serial.begin(9600);
+  // initialize display
+  lcd.init();
+  lcd.backlight();
+  lcd.clear();
+
+  // initialize temp sensor
+  tempSensors.begin();
+  
+  pinMode(TDS_PIN, INPUT);
+}
