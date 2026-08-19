@@ -43,3 +43,11 @@ void setup() {
   // update display every second
   if (millis() - displayTime > 1000) {
     displayTime = millis();
+
+void loop() {
+  static unsigned long sampleTime = millis();
+  static unsigned long displayTime = millis();
+    
+  // read temp
+  tempSensors.requestTemperatures();
+  float currentTemp = tempSensors.getTempCByIndex(0);
