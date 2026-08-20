@@ -4,7 +4,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-## connect pins
+// connect pins
 #define TDS_PIN A0          
 #define ONE_WIRE_BUS 2      
 
@@ -15,7 +15,7 @@ DIYables_LCD_I2C lcd(0x27, 16, 2);
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature tempSensors(&oneWire);
 
-## reference voltage and sample buffer lenght
+// reference voltage and sample buffer lenght
 #define VREF 5.0       
 #define SCOUNT 30          
 int analogBuffer[SCOUNT];
@@ -61,4 +61,16 @@ void loop() {
 
     // convert to voltage
     float averageVoltage = averageAnalog * (float)VREF / 1024.0;
+
+
+     // temp compensation factor
+    float compensationCoefficient = 1.0 + 0.02 * (currentTemp - 25.0);
+    float compensationVoltage = averageVoltage / compensationCoefficient;
+
+    // convert voltage to cond value
+    float tdsValue = (133.42 * compensationVoltage * compensationVoltage * compensationVoltage 
+                     - 255.86 * compensationVoltage * compensationVoltage 
+                     + 857.39 * compensationVoltage) * 0.5;
+    
     }
+}
