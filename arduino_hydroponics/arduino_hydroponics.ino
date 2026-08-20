@@ -48,6 +48,17 @@ void loop() {
   static unsigned long sampleTime = millis();
   static unsigned long displayTime = millis();
     
-  // read temp
-  tempSensors.requestTemperatures();
-  float currentTemp = tempSensors.getTempCByIndex(0);
+    // read temp
+    tempSensors.requestTemperatures();
+    float currentTemp = tempSensors.getTempCByIndex(0);
+
+    // average buffer
+    long sum = 0;
+    for (int i = 0; i < SCOUNT; i++) {
+      sum += analogBuffer[i];
+    }
+    float averageAnalog = sum / (float)SCOUNT;
+
+    // convert to voltage
+    float averageVoltage = averageAnalog * (float)VREF / 1024.0;
+    }
