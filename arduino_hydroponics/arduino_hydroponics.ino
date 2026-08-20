@@ -68,12 +68,12 @@ void loop() {
     float compensationCoefficient = 1.0 + 0.02 * (currentTemp - 25.0);
     float compensationVoltage = averageVoltage / compensationCoefficient;
 
-    // convert voltage to TDS value
+    // convert voltage
     float tdsValue = (133.42 * compensationVoltage * compensationVoltage * compensationVoltage 
                      - 255.86 * compensationVoltage * compensationVoltage 
                      + 857.39 * compensationVoltage) * 0.5;
 
-    // print values to LCD
+    // print values
     lcd.clear();
 
     lcd.setCursor(0, 0);
